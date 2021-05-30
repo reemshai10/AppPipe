@@ -18,11 +18,15 @@ conn.on('disconnected',function(){
 })
 conn.on('error', console.error.bind(console, 'connection error:'));
 module.exports = conn;
+
+
 const AccountSchema = new mongoose.Schema({
-  id : "String",
+  name : "String",
   pw: "String",
   email: "String"
 });
+
+
 const ContactUsSchema = new mongoose.Schema({
   name: "String",
   email:"String",
@@ -74,27 +78,15 @@ app.get("/",(req, res) => {
 
 
 app.post("/",(req,res)=>{
-
- 
-  ContactUs.find({}, function(err, data){
-        for(const i in data){
-          if(req.body.name != data[i]){
-            const contact_us = new ContactUs({
-              name: req.body.name,
-              email: req.body.email,
-              message: req.body.message
-          });
-          contact_us.save();
-        }
-        
-    }
-    
+  const contact_us = new ContactUs({
+     name: req.body.name,
+     email: req.body.email,
+     message: req.body.message
   });
-
-  
- 
-
-})
+          
+        
+  contact_us.save();
+});
 
 app.get("/login",(req, res) => {
 
@@ -106,10 +98,32 @@ app.get("/login",(req, res) => {
 app.get("/register",(req, res) => {
 
   
-    res.sendFile(path.resolve("views/signup.html"));
+    res.sendFile(path.resolve("views/register.html"));
     
   }); 
-  
+
+  app.post("/register",(req, res) => {
+    var name = req.body.usrname;
+    var password = req.body.psw[0];
+    var email = req.body.email;
+
+    
+    
+    var accounts = new Account({
+      name: name,
+      pw: password,
+      email: email
+      
+    });
+    accounts.save(function (err) {
+        if (err) throw err;
+        res.send('Account created successfully by: ' + name);
+     });
+
+
+    
+  }); 
+
   
 
 app.listen(port,function(){
