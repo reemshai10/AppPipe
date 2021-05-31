@@ -4,6 +4,13 @@ const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
 const accountRouter = require('./routes/account');
 const msgRouter = require('./routes/message');
+const cookieParser = require('cookie-parser')
+const session = require('express-session');
+
+
+
+
+
 
 mongoose.connect("mongodb://localhost:27017/AppPipeDB" ,{useNewUrlParser: true , useUnifiedTopology: true});
 var Schema = mongoose.Schema;
@@ -32,7 +39,7 @@ const port = 3001;
 
 const app = express();
 app.use(express.json());
-
+app.use(cookieParser());
 
 //view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -50,7 +57,13 @@ app.use('/images', express.static('images'));
 
 
 
-
+app.use(session({
+	name: 'session-cookie',
+	secret: 'secret string used to encrypt the cookie',
+	cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 },
+	resave: false,
+	saveUninitialized: false
+}));
 
 //routes.
 
@@ -58,14 +71,6 @@ app.use('/images', express.static('images'));
 
 
 app.get("/",(req, res) =>  res.sendFile(path.resolve("views/index.html")))
-
- 
- 
-  
-
-
-
-
 app.use("/message", msgRouter);
 app.use("/account", accountRouter);
 

@@ -4,9 +4,21 @@ const router = express.Router();
 const AccountModel = require("../models/user");
 
 
+function authorize(req, res, next) {
+	if (!req.session.authenticated) {
+		return res.redirect("/account/login");
+	}
+	next();
+}
 
+function ensureLoggedOut(req, res, next) {
+	if (req.session.authenticated) {
+		req.session.destroy();
+	}
+	next();
+}
 
-router.get("/login",(req, res) => {
+router.get("/login", ensureLoggedOut , (req, res) => {
 
   
     res.sendFile(path.resolve("views/login.html"));
@@ -24,6 +36,9 @@ router.post("/login",async(req,res) =>{
     if(!User ||  User.pw!== password){
       return res.redirect("/account/login");
     }
+    req.session.authenticated = true;
+	  req.session.userId = User._id;
+	  req.session.username = User.username;
     res.redirect(req.baseUrl + "/");
   });
   
@@ -36,7 +51,7 @@ router.post("/login",async(req,res) =>{
 
 
 
-router.get("/register",(req, res) => {
+router.get("/register", ensureLoggedOut, (req, res) => {
 
     res.sendFile(path.resolve("views/register.html"));
     
@@ -62,11 +77,11 @@ router.post("/register",async(req, res) => {
     
   }); 
 
-  router.get("/logout", (req, res) => {
+  router.get("/logout", ensureLoggedOut, (req, res) => {
     res.redirect("/account/login");
   });
 
-  router.get("/", async (req, res) => {
+  router.get("/",  authorize, async (req, res) => {
     res.sendFile(path.resolve('views/WebApp.html'));
   });
 
