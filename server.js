@@ -32,7 +32,7 @@ module.exports = conn;
 
 
 
-const port = 3001;
+const port = process.env.PORT || 3001;
 
 
 
@@ -76,6 +76,8 @@ app.use("/account", accountRouter);
 
 
 app.use("/", (req, res) => res.sendStatus(404));
+
+
 app.listen(port,function(){
-    console.log("server started on port 3001 ")
+    console.log("server started on port :" + port)
 });
