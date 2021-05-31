@@ -16,16 +16,19 @@ router.get("/login",(req, res) => {
 
 router.post("/login",async(req,res) =>{
   var name = req.body.usrname;
-  var password = req.body.psw[0];
+  var password = req.body.psw;
   var email = req.body.email;
+ 
+  const user = await AccountModel.findOne({ name }, function (err,User){
+    if(err ) throw err;
+    if(!User ||  User.pw!== password){
+      return res.redirect("/account/login");
+    }
+    res.redirect(req.baseUrl + "/");
+  });
   
   
-  const user = await AccountModel.find({name:name});
-  console.log(user);
-  if(user.name!=name || user.pw!= password){
-    return res.redirect("/account/login");
-  }
-  res.send('Account successfully logIn by: ' + name);
+  
 
 
 
@@ -39,14 +42,12 @@ router.get("/register",(req, res) => {
     
   }); 
 
-router.post("/register",(req, res) => {
+router.post("/register",async(req, res) => {
     var name = req.body.usrname;
     var password = req.body.psw[0];
     var email = req.body.email;
 
-    
-    
-    var accounts = new AccountModel({
+    var accounts = await  new AccountModel({
       name: name,
       pw: password,
       email: email
@@ -57,12 +58,18 @@ router.post("/register",(req, res) => {
        // res.send('Account created successfully by: ' + name);
         return res.redirect("/account/login");
      });
-
-
-
-
      
     
   }); 
+
+  router.get("/logout", (req, res) => {
+    res.redirect("/account/login");
+  });
+
+  router.get("/", async (req, res) => {
+    res.sendFile(path.resolve('views/WebApp.html'));
+  });
+
+
 
   module.exports = router;

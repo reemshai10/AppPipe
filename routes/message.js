@@ -6,8 +6,8 @@ const ContactUsModel = require("../models/msg");
 
 
 
-router.post("/",(req,res)=>{
-    const contact_us = new ContactUsModel({
+router.post("/",async (req,res)=>{
+    const contact_us = await new ContactUsModel({
        name: req.body.name,
        email: req.body.email,
        message: req.body.message
