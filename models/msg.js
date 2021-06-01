@@ -7,9 +7,10 @@ const Schema = mongoose.Schema;
 
 
 const ContactUsSchema = new mongoose.Schema({
-    name: "String",
-    email:"String",
-    message : "String"
+    name: {type: String, required: true,},
+    email: { type: String, required: true },
+    message : { type: String, required: true },
+    created: { type: Date, default: Date.now },
   });
   
   

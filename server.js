@@ -12,20 +12,21 @@ const session = require('express-session');
 
 
 
-mongoose.connect("mongodb://localhost:27017/AppPipeDB" ,{useNewUrlParser: true , useUnifiedTopology: true});
+mongoose.connect("mongodb://localhost:27017" ,{
+	dbName: 'AppPipeDB',
+	auth:{
+		user: 'root',
+		password : 'example',
+		authdb : 'admin'
+	},
+	useCreateIndex: true,
+	useNewUrlParser: true ,
+	useUnifiedTopology: true
+}).then(() => { console.log("connected to mongo db") });
+
 var Schema = mongoose.Schema;
 
-var conn = mongoose.connection;
-conn.on('connected', function() {
-    console.log('database is connected successfully');
-});
-conn.on('disconnected',function(){
-    console.log('database is disconnected successfully');
-})
 
-
-conn.on('error', console.error.bind(console, 'connection error:'));
-module.exports = conn;
 
 
 
@@ -33,8 +34,6 @@ module.exports = conn;
 
 
 const port = process.env.PORT || 3001;
-
-
 
 
 const app = express();
