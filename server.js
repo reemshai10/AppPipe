@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
 const accountRouter = require('./routes/account');
 const msgRouter = require('./routes/message');
+const webappRouter = require('./routes/webapp');
 const cookieParser = require('cookie-parser')
 const session = require('express-session');
 
@@ -22,8 +23,12 @@ mongoose.connect("mongodb://localhost:27017" ,{
 	useCreateIndex: true,
 	useNewUrlParser: true ,
 	useUnifiedTopology: true
-}).then(() => { console.log("connected to mongo db") });
+}).then(() => { console.log("connected to mongo db")},
+   error => {
+     console.error('Eror connected to mongo db');
+  });
 
+  
 var Schema = mongoose.Schema;
 
 
@@ -72,6 +77,7 @@ app.use(session({
 app.get("/",(req, res) =>  res.sendFile(path.resolve("views/index.html")))
 app.use("/message", msgRouter);
 app.use("/account", accountRouter);
+app.use("/webapp", webappRouter);
 
 
 app.use("/", (req, res) => res.sendStatus(404));

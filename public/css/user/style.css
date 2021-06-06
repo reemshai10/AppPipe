@@ -184,7 +184,10 @@ h2 {
   color: #222;
   font-family: Poppins;
   font-size: 36px; }
-
+  b {
+    font-weight: bolder;
+    color: black;
+ }
 .main {
   background: #f8f8f8;
   padding: 150px 0; }

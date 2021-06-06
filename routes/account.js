@@ -61,21 +61,29 @@ router.post("/register",async(req, res) => {
     var name = req.body.usrname;
     var password = req.body.psw[0];
     var email = req.body.email;
-
+   
     var accounts = await  new AccountModel({
       name: name,
       pw: password,
       email: email
       
     });
+
+    const user = await AccountModel.findOne({ name }, function (err,User){
+      if(err ) throw err;
+      if(User){
+        return res.sendFile(path.resolve("views/registerProblems.html"));
+      }
+    
+
     accounts.save(function (err) {
         if (err) throw err;
-       // res.send('Account created successfully by: ' + name);
         return res.redirect("/account/login");
      });
      
-    
+    });
   }); 
+  
 
   router.get("/logout", ensureLoggedOut, (req, res) => {
     res.redirect("/account/login");
