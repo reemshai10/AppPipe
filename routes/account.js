@@ -27,11 +27,10 @@ router.get("/login", ensureLoggedOut , (req, res) => {
 
 
 router.post("/login",async(req,res) =>{
-  var name = req.body.usrname;
   var password = req.body.psw;
   var email = req.body.email;
  
-  const user = await AccountModel.findOne({ name }, function (err,User){
+  const user = await AccountModel.findOne({ email }, function (err,User){
     if(err ) throw err;
     if(!User ||  User.pw!== password){
       return res.redirect("/account/login");
@@ -58,18 +57,17 @@ router.get("/register", ensureLoggedOut, (req, res) => {
   }); 
 
 router.post("/register",async(req, res) => {
-    var name = req.body.usrname;
     var password = req.body.psw[0];
     var email = req.body.email;
    
     var accounts = await  new AccountModel({
-      name: name,
-      pw: password,
-      email: email
+      email: email,
+      pw: password
+      
       
     });
 
-    const user = await AccountModel.findOne({ name }, function (err,User){
+    const user = await AccountModel.findOne({ email }, function (err,User){
       if(err ) throw err;
       if(User){
         return res.sendFile(path.resolve("views/registerProblems.html"));

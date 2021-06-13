@@ -1,16 +1,4 @@
 
-
-
-function validateUsr(nameValue) {
-    var word = /[a-zA-Z]/;
-    if(!nameValue.match(word)){
-        alert("user name must contain small or upper case letters!");
-        return false;
-
-    }
-    return true;
-    
-}
  
 
 function validateEmail(sEmail) {

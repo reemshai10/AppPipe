@@ -7,10 +7,21 @@ const Schema = mongoose.Schema;
 
 
 const ContactUsSchema = new mongoose.Schema({
-    name: {type: String, required: true,},
-    email: { type: String, required: true },
-    message : { type: String, required: true },
-    created: { type: Date, default: Date.now },
+    name: {
+      type:String
+    },
+    email: { 
+      type: String,
+       required: true
+       },
+    message : {
+       type: String,
+        required: true
+       },
+    created: {
+       type: Date,
+        default: Date.now
+       },
   });
   
   
