@@ -7,7 +7,7 @@ const msgRouter = require('./routes/message');
 const webappRouter = require('./routes/webapp');
 const cookieParser = require('cookie-parser')
 const session = require('express-session');
-
+require('dotenv').config();
 
 
 
