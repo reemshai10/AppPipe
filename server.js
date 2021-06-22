@@ -13,13 +13,7 @@ require('dotenv').config();
 
 
 
-mongoose.connect("mongodb://localhost:27017" ,{
-	dbName: 'AppPipeDB',
-	auth:{
-		user: 'root',
-		password : 'example',
-		authdb : 'admin'
-	},
+mongoose.connect(process.env.MONGO_URI ,{
 	useCreateIndex: true,
 	useNewUrlParser: true ,
 	useUnifiedTopology: true
