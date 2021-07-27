@@ -36,7 +36,7 @@ router.post("/login",async(req,res) =>{
   const user = await AccountModel.findOne({ email }, function (err,User){
     if(err )return res.status(500).send({
       success: false,
-      message: 'User already exist!'
+      message: 'SomeThing Go Worng!'
     });
       if(!User){
         return res.status(500).send({
@@ -97,7 +97,9 @@ router.post("/register",async (req, res) => {
    
   });
 }); 
-  
+  router.get("/dashbord",  authorize, async (req, res) => {
+    res.sendFile(path.resolve('views/dashbord.html'));
+  });
 
   router.get("/logout", ensureLoggedOut, (req, res) => {
     res.redirect("/account/login");
