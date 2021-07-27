@@ -4,8 +4,9 @@ const Schema = mongoose.Schema;
 
 const AccountSchema = new mongoose.Schema({
     email: {
-      type: String,
-       required: true
+       type: String,
+       required: true,
+       unique: true
       },
     pw: {
        type: String,

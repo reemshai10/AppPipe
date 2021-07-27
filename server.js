@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const accountRouter = require('./routes/account');
 const msgRouter = require('./routes/message');
 const webappRouter = require('./routes/webapp');
+const ApiUser = require('./api/users');
 const cookieParser = require('cookie-parser')
 const session = require('express-session');
 require('dotenv').config();
@@ -72,6 +73,7 @@ app.get("/",(req, res) =>  res.sendFile(path.resolve("views/index.html")))
 app.use("/message", msgRouter);
 app.use("/account", accountRouter);
 app.use("/webapp", webappRouter);
+app.use("/api",ApiUser);
 
 
 app.use("/", (req, res) => res.sendStatus(404));

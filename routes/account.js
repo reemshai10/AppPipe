@@ -2,7 +2,8 @@ const express = require("express");
 const path = require("path");
 const router = express.Router();
 const AccountModel = require("../models/user");
-
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 function authorize(req, res, next) {
 	if (!req.session.authenticated) {
@@ -27,26 +28,46 @@ router.get("/login", ensureLoggedOut , (req, res) => {
 
 
 router.post("/login",async(req,res) =>{
+  
   var password = req.body.psw;
   var email = req.body.email;
- 
+  
+
   const user = await AccountModel.findOne({ email }, function (err,User){
-    if(err ) throw err;
-    if(!User ||  User.pw!== password){
-      return res.redirect("/account/login");
-    }
-    req.session.authenticated = true;
-	  req.session.userId = User._id;
-	  req.session.username = User.username;
-    res.redirect(req.baseUrl + "/");
+    if(err )return res.status(500).send({
+      success: false,
+      message: 'User already exist!'
+    });
+      if(!User){
+        return res.status(500).send({
+          success: false,
+          message: 'User Didnt Found ,Go Back And Try Agian or Register!!'
+        });
+      }
+      if(User){
+        bcrypt.compare(password, User.pw, function(err,result){
+            if (result === true) {
+              req.session.authenticated = true;
+              req.session.userId = User._id;
+              req.session.username = User.username;
+              res.redirect(req.baseUrl + "/");
+            }
+           else
+           return res.status(500).send({
+            success: false,
+            message: 'Worng Password!!,Go Back And Try Agian'
+          });
+            
+        });
+             
+      }
+    
+      
   });
-  
-  
+ 
   
 
-
-
-})
+});
 
 
 
@@ -56,31 +77,26 @@ router.get("/register", ensureLoggedOut, (req, res) => {
     
   }); 
 
-router.post("/register",async(req, res) => {
-    var password = req.body.psw[0];
-    var email = req.body.email;
-   
-    var accounts = await  new AccountModel({
+router.post("/register",async (req, res) => {
+  var password = req.body.psw[0];
+  var email = req.body.email;
+ 
+
+  bcrypt.hash(password,saltRounds,function(err,hash){
+    const accounts = new AccountModel({
       email: email,
-      pw: password
-      
-      
+      pw: hash
     });
-
-    const user = await AccountModel.findOne({ email }, function (err,User){
-      if(err ) throw err;
-      if(User){
-        return res.sendFile(path.resolve("views/registerProblems.html"));
+  
+  accounts.save(function (err) {
+      if (err) {
+        return res.sendFile(path.resolve("views/registerProblems.html"));         
       }
-    
-
-    accounts.save(function (err) {
-        if (err) throw err;
-        return res.redirect("/account/login");
-     });
-     
-    });
-  }); 
+    return res.redirect("/account/login");
+   });
+   
+  });
+}); 
   
 
   router.get("/logout", ensureLoggedOut, (req, res) => {
