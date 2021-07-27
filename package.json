@@ -1,5 +1,5 @@
 {
-  "name": "AppPipe",
+  "name": "app-pipe",
   "version": "1.0.0",
   "dependencies": {
     "bcrypt": "^5.0.1",
