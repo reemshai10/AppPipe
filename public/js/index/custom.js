@@ -1,6 +1,6 @@
 (function ($) {
 
-	"use strict";
+	'use strict';
 
 
 	$('.owl-carousel').owlCarousel({
@@ -19,7 +19,7 @@
 				items: 2
 			}
 		}
-	})
+	});
 
 
 	$(window).scroll(function () {
@@ -28,9 +28,9 @@
 		var header = $('header').height();
 
 		if (scroll >= box - header) {
-			$("header").addClass("background-header");
+			$('header').addClass('background-header');
 		} else {
-			$("header").removeClass("background-header");
+			$('header').removeClass('background-header');
 		}
 	});
 
@@ -44,7 +44,7 @@
 
 	// Menu Dropdown Toggle
 	if ($('.menu-trigger').length) {
-		$(".menu-trigger").on('click', function () {
+		$('.menu-trigger').on('click', function () {
 			$(this).toggleClass('active');
 			$('.header-area .nav').slideToggle(200);
 		});
@@ -102,16 +102,16 @@
 			}
 			$('.menu-item').not('[href=""]').not('[href="javascript:;"]').each(function () {
 				var currLink = $(this);
-				var refElement = $(currLink.attr("href"));
+				var refElement = $(currLink.attr('href'));
 
 				if (refElement.position().top <= scrollPos && refElement.position().top + refElement.height() > scrollPos) {
-					$('.menu-item').removeClass("active");
-					currLink.addClass("active");
+					$('.menu-item').removeClass('active');
+					currLink.addClass('active');
 				} else {
-					currLink.removeClass("active");
+					currLink.removeClass('active');
 				}
 			});
-		})
+		});
 	});
 
 	const Accordion = {
@@ -124,14 +124,14 @@
 
 		openAccordion: function (toggle, content) {
 			if (content.children.length) {
-				toggle.classList.add("is-open");
+				toggle.classList.add('is-open');
 				let final_height = Math.floor(content.children[0].offsetHeight);
-				content.style.height = final_height + "px";
+				content.style.height = final_height + 'px';
 			}
 		},
 
 		closeAccordion: function (toggle, content) {
-			toggle.classList.remove("is-open");
+			toggle.classList.remove('is-open');
 			content.style.height = 0;
 		},
 
@@ -140,21 +140,21 @@
 
 			// Override default settings with classes
 			let is_first_expanded = _this.settings.first_expanded;
-			if (el.classList.contains("is-first-expanded")) is_first_expanded = true;
+			if (el.classList.contains('is-first-expanded')) is_first_expanded = true;
 			let is_toggle = _this.settings.toggle;
-			if (el.classList.contains("is-toggle")) is_toggle = true;
+			if (el.classList.contains('is-toggle')) is_toggle = true;
 
 			// Loop through the accordion's sections and set up the click behavior
-			const sections = el.getElementsByClassName("accordion");
-			const all_toggles = el.getElementsByClassName("accordion-head");
-			const all_contents = el.getElementsByClassName("accordion-body");
+			const sections = el.getElementsByClassName('accordion');
+			const all_toggles = el.getElementsByClassName('accordion-head');
+			const all_contents = el.getElementsByClassName('accordion-body');
 			for (let i = 0; i < sections.length; i++) {
 				const section = sections[i];
 				const toggle = all_toggles[i];
 				const content = all_contents[i];
 
 				// Click behavior
-				toggle.addEventListener("click", function (e) {
+				toggle.addEventListener('click', function (e) {
 					if (!is_toggle) {
 						// Hide all content areas first
 						for (let a = 0; a < all_contents.length; a++) {
@@ -165,7 +165,7 @@
 						_this.openAccordion(toggle, content);
 					} else {
 						// Toggle the clicked item
-						if (toggle.classList.contains("is-open")) {
+						if (toggle.classList.contains('is-open')) {
 							_this.closeAccordion(toggle, content);
 						} else {
 							_this.openAccordion(toggle, content);
@@ -183,7 +183,7 @@
 
 	(function () {
 		// Initiate all instances on the page
-		const accordions = document.getElementsByClassName("accordions");
+		const accordions = document.getElementsByClassName('accordions');
 		for (let i = 0; i < accordions.length; i++) {
 			Accordion.init(accordions[i]);
 		}
@@ -215,11 +215,11 @@
 			});
 		}
 
-		$("#preloader").animate({
+		$('#preloader').animate({
 			'opacity': '0'
 		}, 600, function () {
 			setTimeout(function () {
-				$("#preloader").css("visibility", "hidden").fadeOut();
+				$('#preloader').css('visibility', 'hidden').fadeOut();
 			}, 300);
 		});
 	});
