@@ -23,8 +23,8 @@
         ],
         "no-unused-vars": 0,
         "globals": {
-            "$": false,
-            "jquery": false
+            "$": 0,
+            "jquery": 0
         },
         "semi": [
             "error",
