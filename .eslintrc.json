@@ -1,6 +1,5 @@
 {
     "env": {
-        "commonjs": true,
         "es2021": true,
         "node": true
     },
@@ -22,8 +21,10 @@
             "single"
         ],
         "no-unused-vars": 0,
-        "jquery": 0,
-        "$": 0,
+        "globals": {
+            "$": 0,
+            "jquery": 0
+        },
         "semi": [
             "error",
             "always"
