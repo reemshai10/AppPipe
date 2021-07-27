@@ -21,10 +21,7 @@
             "single"
         ],
         "no-unused-vars": 0,
-        "globals": {
-            "$": 0,
-            "jquery": 0
-        },
+        
         "semi": [
             "error",
             "always"
