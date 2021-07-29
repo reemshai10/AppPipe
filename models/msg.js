@@ -1,9 +1,4 @@
-
 const mongoose = require('mongoose');
-
-
-
-
 
 const ContactUsSchema = new mongoose.Schema({
 	name: {
@@ -11,7 +6,8 @@ const ContactUsSchema = new mongoose.Schema({
 	},
 	email: { 
 		type: String,
-		required: true
+		required: true,
+		unique: true
 	},
 	message : {
 		type: String,
@@ -22,8 +18,8 @@ const ContactUsSchema = new mongoose.Schema({
 		default: Date.now
 	},
 });
-  
-  
+	
+	
 const ContactUs = mongoose.model('ContactUs',ContactUsSchema);
 
 
