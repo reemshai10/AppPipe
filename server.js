@@ -6,6 +6,7 @@ const accountRouter = require('./routes/account');
 const msgRouter = require('./routes/message');
 const webappRouter = require('./routes/webapp');
 const ApiUser = require('./api/users');
+const ApiMsg = require('./api/conatct');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 require('dotenv').config();
@@ -74,7 +75,7 @@ app.use('/message', msgRouter);
 app.use('/account', accountRouter);
 app.use('/webapp', webappRouter);
 app.use('/api',ApiUser);
-
+app.use('/api/contacts',ApiMsg);
 
 app.use('/', (req, res) => res.sendStatus(404));
 
