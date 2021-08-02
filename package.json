@@ -18,7 +18,7 @@
   "scripts": {
     "test": "eslint .",
     "start": "node server.js",
-    "dev": "npx nodemon server.js"
+    "dev": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
