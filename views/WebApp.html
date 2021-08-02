@@ -53,7 +53,6 @@
 						 <!-- ***** Menu Start ***** -->
 						 <ul class="nav">
 							 <li class="scroll-to-section"><a href="/" class="menu-item">Home</a></li>
-							 <li class="scroll-to-section"><a href="/account/dashbord" class="menu-item">DashBoard</a></li>
 							 <li class="scroll-to-section"><a href="/account/logout" class="menu-item">logout</a></li>
 							 
 						 </ul>
@@ -110,7 +109,7 @@
 								<div class="input-group-prepend">
 								  <label class="input-group-text" for="inputGroupSelect01">Platform</label>
 								</div>
-								<select class="custom-select" id="inputGroupSelect01" name="choose">
+								<select class="custom-select" id="inputGroupSelect01" name="choose" >
 								  <option selected>Select Android or iOS</option>
 								  <option value="Android">Android</option>
 								  <option value="iOS">iOS</option>
@@ -119,21 +118,25 @@
 							</div>
 							<div class="form-group">
 							  <label for="formGroupExampleInput">App Name</label>
-							  <input type="text" class="form-control" name="appname" id="formGroupExampleInput" placeholder="your app name">
+							  <input type="text" class="form-control" name="appname" id="formGroupExampleInput" placeholder="your app name" required>
 							</div>
 							<div class="form-group">
 							  <label for="formGroupExampleInput2">Url</label>
-							  <input type="text" class="form-control" name="urlname" id="formGroupExampleInput2" placeholder="your url website">
+							  <input type="text" class="form-control" name="urlname" id="formGroupExampleInput2" placeholder="your url website" required>
 							</div>
 							<div class="form-group">
 							  <label for="formGroupExampleInput3">Email</label>
-							  <input type="text" class="form-control" name="emailname" id="formGroupExampleInput3" placeholder="your email">
+							  <input type="text" class="form-control" name="emailname" id="formGroupExampleInput3" placeholder="your email" required>
 							</div>
-
+							
 							<div class="form-group form-button">
-                                <input type="submit" name="info" id="info"  class="form-submit" value="Send"  />
-                            </div>
+							<input type="submit" name="info" id="info"  class="form-submit" value="Send"  />
 
+							
+						
+						</div>
+                            </div>
+						
 							
 							
 						  </form>

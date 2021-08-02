@@ -18,10 +18,12 @@ router.post('/webapp',async (req,res)=>{
 		url: url,
 		email: email
 	});
+
+
             
           
 	contact_us.save();
-	return res.redirect('/account');
+	return res.redirect('/account/dashbord');
 });
 
 
