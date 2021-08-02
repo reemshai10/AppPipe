@@ -9,33 +9,36 @@ router.get('/webapp', async (req, res) => {
 	res.send(webapp);
 });
 
-//find by email one webapps
-router.get('/:email', async (req, res) => {
-	const { email } = req.params;
-	if (!email) {
+//find by url one webapps
+router.get('/:url', async (req, res) => {
+	const { url } = req.params;
+	if (!url) {
 		return res.sendStatus(400); // bad request
 	}
-	const WebApp = await WebAppModel.findOne({ email  },function (err,User){
+	const WebApp = await WebAppModel.findOne({ url: url  },function (err,User){
 		if (err) return res.sendStatus(500);	
-		if (!WebApp) {
-			return res.sendStatus(404); // not found
-		}
+		
 	});
+	if (!WebApp) {
+		return res.sendStatus(404); // not found
+	}
 	res.send(WebApp);
 });
 
 //make new webapps
 router.post('/', async (req, res) => {
 	const fields = req.body;
-	const check = await WebAppModel.findOne({ email: fields.email });
+	if (!fields) return res.sendStatus(400);
+
+	const check = await WebAppModel.findOne({ url: fields.url });
 	if(check) {
 		return res.status(500).send({
 			success: false,
-			message: 'User Already In Use!'
+			message: 'url Already In Use!'
 		});
 	}
 	try {
-		const WebApp = await WebAppModel.create(fields);
+		const WebApp = await WebAppModel.create({platform : fields.platfrom,appName : fields.appName,url : fields.url,email : fields.email});
 		res.send(WebApp);
 	} catch (err) {
 		console.error(err);
@@ -43,21 +46,22 @@ router.post('/', async (req, res) => {
 	}
 });
 
-//delete webapps by email 
-router.delete('/:email', async (req, res) => {
-	const check = await WebAppModel.findOne({ email: req.params.email });
+//delete webapps by url 
+router.delete('/:url', async (req, res) => {
+	const { url } = req.params;
+	if (!url) {
+		return res.sendStatus(400); // bad request
+	}
+	const check = await WebAppModel.findOne({ url: url });
 	if(!check) {
 		return res.status(500).send({
 			success: false,
-			message: ' Webapp Not Found!'
+			message: ' url Not Found!'
 		});
 	}
-	const { email } = req.params;
-	if (!email) {
-		return res.sendStatus(400); // bad request
-	}
+	
 	try{
-		const webapps = await WebAppModel.findOneAndDelete({email:email});
+		const webapps = await WebAppModel.findOneAndDelete({url:url});
 		res.send(webapps);
 	} catch (err) {
 		console.error(err);
@@ -65,20 +69,20 @@ router.delete('/:email', async (req, res) => {
 	}
 });
 
-//update webapps make chenge by email in put.
-router.put('/:email', async (req, res) => {
-	const { email } = req.params;
-	if (!email) {
+//update webapps make chenge by url in put.
+router.put('/:url', async (req, res) => {
+	const { url } = req.params;
+	if (!url) {
 		return res.sendStatus(400); // bad request
 	}
 	const fields = req.body;
-	try {
-		const WebApp = await WebAppModel.findOneAndUpdate(email, fields, { new: true });
-		res.send(WebApp);
-	} catch (err) {
-		console.error(err);
-		res.sendStatus(400);
-	}
+	const WebApp = await WebAppModel.findOneAndUpdate({url:url}, fields, { new: true,useFindAndModify:false });
+	if (!WebApp) 
+		return res.status(500).send({
+			success: false,
+			message: ' url Not Found!'
+		});
+	res.send(WebApp);
 });
 
 
