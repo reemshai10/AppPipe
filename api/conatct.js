@@ -15,17 +15,19 @@ router.get('/:email', async (req, res) => {
 	if (!email) {
 		return res.sendStatus(400); // bad request
 	}
-	const emailmsg = await msgModel.findOne({ email });
-	
-	if (!emailmsg) {
-		return res.sendStatus(404); // not found
-	}
+	const emailmsg = await msgModel.findOne({ email }, function (err,User){
+		if (err) return res.sendStatus(500);	
+		if (!emailmsg) return res.sendStatus(404); // not found
+		
+	});
 	res.send(emailmsg);
 });
 
 //make new msg
 router.post('/', async (req, res) => {
 	const fields = req.body;
+	const check = await msgModel.findOne({ email: fields.email });
+
 	try {
 		const msg = await msgModel.create(fields);
 		res.send(msg);
@@ -37,6 +39,13 @@ router.post('/', async (req, res) => {
 
 //delete msg by email delete all msg
 router.delete('/:email', async (req, res) => {
+	const check = await msgModel.findOne({ email: req.params.email });
+	if(!check) {
+		return res.status(500).send({
+			success: false,
+			message: 'User Not Found!'
+		});
+	}
 	const { email } = req.params;
 	if (!email) {
 		return res.sendStatus(400); // bad request
