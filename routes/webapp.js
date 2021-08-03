@@ -25,6 +25,12 @@ router.post('/webapp',async (req,res)=>{
 	contact_us.save();
 	return res.redirect('/account/dashbord');
 });
+router.get('/download', function(req, res){
+	const file = `${__dirname}/myApp.apk`;
+	res.download(file);
+});
+
+
 
 
 
