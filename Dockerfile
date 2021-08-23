@@ -1,19 +1,17 @@
-FROM node:14
+FROM node:13-alpine
 
-# Create app directory
-WORKDIR /usr/src/app
+ENV MONGO_DB_USERNAME=admin \
+    MONGO_DB_PWD=password
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-COPY package*.json ./
+RUN mkdir -p /home/app
 
+COPY . /home/app
+
+# set default dir so that next commands executes in /home/app dir
+WORKDIR /home/app
+
+# will execute npm install in /home/app because of WORKDIR
 RUN npm install
-# If you are building your code for production
-# RUN npm ci --only=production
 
-# Bundle app source
-COPY . .
-
-EXPOSE 8080
-CMD [ "node", "server.js" ]
+# no need for /home/app/server.js because of WORKDIR
+CMD ["node", "server.js"]
