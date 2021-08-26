@@ -5,7 +5,7 @@ ENV MONGO_DB_USERNAME=root \
 
 RUN mkdir -p /home/app
 
-COPY . /home/app
+COPY ./app /home/app
 
 # set default dir so that next commands executes in /home/app dir
 WORKDIR /home/app
