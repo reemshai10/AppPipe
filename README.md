@@ -42,17 +42,30 @@ http://localhost:3001
 With Docker Compose
 
 To start the application
+
 Step 1: start mongodb and mongo-express
+
 docker-compose -f docker-compose.yaml up
+
 You can access the mongo-express under localhost:8080 from your browser
+
 Step 2: in mongo-express UI - create a new database "AppPipe"
+
 Step 3: in mongo-express UI - create a new collection "accounts" in the database "AppPipe"
+
 Step 4: start node server
+
 npm install
+
 node server.js
+
 Step 5: access the nodejs application from browser
+
 http://localhost:3001
 
 To build a docker image from the application
+
 docker build -t my-app:1.1 .       
+
 The dot "." at the end of the command denotes location of the Dockerfile.
+
