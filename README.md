@@ -45,9 +45,9 @@ To start the application
 
 Step 1: start mongodb and mongo-express
 
-docker-compose -f docker-compose.yaml up
+docker-compose -f mongo.yaml up
 
-You can access the mongo-express under localhost:8080 from your browser
+You can access the mongo-express under localhost:8081 from your browser
 
 Step 2: in mongo-express UI - create a new database "AppPipe"
 
@@ -65,7 +65,7 @@ http://localhost:3001
 
 To build a docker image from the application
 
-docker build -t my-app:1.1 .       
+docker build -t my-app:1.2 .       
 
 The dot "." at the end of the command denotes location of the Dockerfile.
 
