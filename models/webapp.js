@@ -27,7 +27,7 @@ const webApp = new mongoose.Schema({
 });
 
   
-const web_app = mongoose.model('CusWebApp',webApp);
+const web_app = mongoose.model('cuswebapps',webApp);
 
 
 module.exports = web_app;
