@@ -20,8 +20,6 @@ function ensureLoggedOut(req, res, next) {
 }
 
 router.get('/login', ensureLoggedOut , (req, res) => {
-
-  
 	res.sendFile(path.resolve('views/login.html'));
     
 });
