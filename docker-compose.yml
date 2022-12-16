@@ -1,24 +1,7 @@
 # Use root/example as user/password credentials
-version: '3.1'
+version: '3.3'
 
 services:
-  mongo:
-    image: mongo
-    restart: always
-    ports:
-        - 27017:27017
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
-
-  mongo-express:
-    image: mongo-express
-    restart: always
-    ports:
-      - 8081:8081
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: example
   jenkins:
     build:
       context: src/.
@@ -30,6 +13,18 @@ services:
   app:
     build: .
     ports:
-      - 8080:3001 
-volumes: # save the data with volume by name
-  jenkinsHome:   
+      - 3001:3001 
+  gitlab:
+    image: gitlab/gitlab-ce
+    ports:
+      - 80:80
+    volumes:
+      - gitlab-config:/etc/gitlab
+      - gitlab-logs:/var/log/gitlab
+      - gitlab-data:/var/opt/gitlab
+
+volumes:
+  gitlab-config:
+  gitlab-logs:
+  gitlab-data:
+  jenkinsHome:

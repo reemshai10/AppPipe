@@ -2,10 +2,12 @@
 version: '3.1'
 
 services:
-  my-app:
-    image: 558924459154.dkr.ecr.eu-central-1.amazonaws.com/app-pipe:1.2
-    ports:
-     - 3001:3001
+  my-app: 
+   build: 
+    context: .
+    #image: 558924459154.dkr.ecr.eu-central-1.amazonaws.com/app-pipe:1.2
+   ports:
+    - 3001:3001
   mongo:
     image: mongo
     restart: always
