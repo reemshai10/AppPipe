@@ -2,7 +2,7 @@
 version: '3.3'
 
 services:
-  jenkins:
+  jenkins_pip:
     build:
       context: src/.
     ports:  # localhost:8080 or localhost -Jenkins will show up
@@ -15,14 +15,18 @@ services:
     ports:
       - 3001:3001 
   gitlab:
-    image: gitlab/gitlab-ce
+    image: 'gitlab/gitlab-ee:latest'
+    restart: always
+    hostname: 'gitlab'
     ports:
-      - 80:80
+      - '80:80'
+      #- '443:443'
+      #- '22:22'
     volumes:
       - gitlab-config:/etc/gitlab
       - gitlab-logs:/var/log/gitlab
       - gitlab-data:/var/opt/gitlab
-
+  
 volumes:
   gitlab-config:
   gitlab-logs:

@@ -5,5 +5,5 @@ jenkins:
       allowsSignup: false   
       users:   
         - id: "admin"
-          password: "admin!"
+          password: "admin"
   authorizationStrategy: loggedInUsersCanDoAnything        
